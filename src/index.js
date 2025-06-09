@@ -17,7 +17,7 @@ import { initTabs } from './tabs/index.js';
   };
 
 const clearContent = () => {
-  const node = kintone.app.getHeaderSpaceElement(); // ← ✅ 正しく修正！
+  const node = kintone.app.getHeaderSpaceElement(); // ← ✅ 正しく修正！！！
   while (node.firstChild) node.removeChild(node.firstChild);
 };
 
