@@ -16,10 +16,10 @@ import { initTabs } from './tabs/index.js';
     });
   };
 
-  const clearContent = () => {
-    const node = kintone.app.getContentSpaceElement();
-    while (node.firstChild) node.removeChild(node.firstChild);
-  };
+const clearContent = () => {
+  const node = kintone.app.getHeaderSpaceElement(); // ← ✅ 正しく修正！
+  while (node.firstChild) node.removeChild(node.firstChild);
+};
 
   kintone.events.on('app.record.index.show', async (event) => {
     if (Number(event.appId) !== APP_ID) return event;
