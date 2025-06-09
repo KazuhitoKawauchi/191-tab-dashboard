@@ -231,6 +231,8 @@ const clearContent = () => {
   while (node.firstChild) node.removeChild(node.firstChild);
 };
 
+  const APP_ID = 191;
+
 kintone.events.on('app.record.index.show', async (event) => {
   if (Number(event.appId) !== APP_ID) return event;
   if (document.getElementById('tab-dashboard')) return event;
