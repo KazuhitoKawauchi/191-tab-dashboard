@@ -1,0 +1,12 @@
+{
+  "name": "191-tab-dashboard",
+  "version": "1.0.0",
+  "description": "Kintone app 191 dashboard built with Vite",
+  "type": "module",
+  "scripts": {
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
