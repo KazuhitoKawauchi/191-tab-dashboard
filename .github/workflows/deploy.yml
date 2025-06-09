@@ -3,8 +3,6 @@ name: Build and deploy bundle.js
 on:
   push:
     branches: [main]
-    paths:
-      - 'src/**'
 
 jobs:
   build:
