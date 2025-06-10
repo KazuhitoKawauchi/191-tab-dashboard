@@ -28,3 +28,9 @@ jobs:
           git add docs/bundle.js
           git commit -m "Auto-build bundle.js from src" || echo "No changes to commit"
           git push
+
+      - name: Print jsDelivr bundle.js URL
+        run: |
+          echo ""
+          echo "✅ jsDelivr URL for latest bundle.js:"
+          echo "https://cdn.jsdelivr.net/gh/KazuhitoKawauchi/191-tab-dashboard@${{ github.sha }}/docs/bundle.js"
