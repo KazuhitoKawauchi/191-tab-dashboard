@@ -1,4 +1,4 @@
-// === 【コード版 v1.3.15：完全版】 ===
+// === 【コード版 v1.3.15：URL読み込み対応版】 ===
 (function () {
   'use strict';
 
@@ -217,7 +217,7 @@
           }
         });
       });
-    }
+    };
 
     kintone.events.on('app.record.index.show', () => {
       if (!document.getElementById('custom-tab-wrap')) renderTabs();
