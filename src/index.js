@@ -1,5 +1,7 @@
 // === 【コード版 v1.3.15：URL読み込み対応版】 ===
 
+import { initTabs } from './tabs';
+
 console.log("📦 bundle.js updated: v1.3.15 - 2025/06/10");
 window.__BUNDLE_VERSION__ = "v1.3.15 - 2025/06/10";
 
