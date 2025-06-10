@@ -241,7 +241,6 @@ kintone.events.on('app.record.index.show', async (event) => {
   if (Number(event.appId) !== APP_ID) return event;
   if (document.getElementById('tab-dashboard')) return event;
 
-  await loadChartJs();
   clearContent();
 
   const root = document.createElement('div');
