@@ -1,1 +1,10 @@
 node_modules/
+
+# Viteなどの一時ファイル
+dist/
+.vite/
+*.log
+
+# 環境変数・OSファイル
+.env
+.DS_Store
