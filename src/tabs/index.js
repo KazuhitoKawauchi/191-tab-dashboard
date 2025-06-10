@@ -1,3 +1,5 @@
+// === src/tabs/index.js ===
+
 import { buildEmployeeTab } from './employee.js';
 import { buildCustomerTab } from './customer.js';
 import { buildProductTab } from './product.js';

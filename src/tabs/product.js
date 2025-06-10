@@ -1,4 +1,7 @@
-export function buildProductTab(container) {
-  if (typeof container === 'string') container = document.getElementById(container);
-  container.innerHTML = '<p>TODO: 品名別タブを実装</p>';
+// === src/tabs/product.js ===
+
+export function buildProductTab(container, ym) {
+  const message = document.createElement('p');
+  message.innerText = `品名別（${ym}）：今後対応予定です。`;
+  container.appendChild(message);
 }

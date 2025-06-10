@@ -1,4 +1,7 @@
-export function buildMonthTab(container) {
-  if (typeof container === 'string') container = document.getElementById(container);
-  container.innerHTML = '<p>TODO: 年月別タブを実装</p>';
+// === src/tabs/month.js ===
+
+export function buildMonthTab(container, ym) {
+  const message = document.createElement('p');
+  message.innerText = `年月別（${ym}）：今後対応予定です。`;
+  container.appendChild(message);
 }
