@@ -5,7 +5,7 @@ export function buildEmployeeTab(container, ym) {
   wrapper.innerHTML = `<h3>${ym} 担当者別ダミー表示</h3>`;
   container.appendChild(wrapper);
 
-  // 横並びにするためのコンテナ
+  // ▼グラフ用の横並びコンテナ
   const chartContainer = document.createElement('div');
   chartContainer.style.display = 'flex';
   chartContainer.style.justifyContent = 'center';
@@ -13,13 +13,13 @@ export function buildEmployeeTab(container, ym) {
   chartContainer.style.flexWrap = 'wrap';
   container.appendChild(chartContainer);
 
-  // キャンバス1（売上）
+  // グラフ1（売上）
   const canvas1 = document.createElement('canvas');
   canvas1.width = 400;
   canvas1.height = 260;
   chartContainer.appendChild(canvas1);
 
-  // キャンバス2（加工高）
+  // グラフ2（加工高）
   const canvas2 = document.createElement('canvas');
   canvas2.width = 400;
   canvas2.height = 260;
@@ -62,4 +62,34 @@ export function buildEmployeeTab(container, ym) {
       scales: { y: { beginAtZero: true } }
     }
   });
+
+  // ▼表の表示
+  const table = document.createElement('table');
+  table.style.borderCollapse = 'collapse';
+  table.style.marginTop = '32px';
+  table.style.width = '100%';
+  table.style.fontSize = '14px';
+
+  const headerRow = `
+    <tr style="background-color:#007BFF; color:white;">
+      <th style="border:1px solid #ccc; padding:6px;">担当者</th>
+      <th style="border:1px solid #ccc; padding:6px;">売上予算</th>
+      <th style="border:1px solid #ccc; padding:6px;">売上金額</th>
+      <th style="border:1px solid #ccc; padding:6px;">加工高予算</th>
+      <th style="border:1px solid #ccc; padding:6px;">加工高</th>
+    </tr>
+  `;
+
+  const rows = demoData.map((d, i) => `
+    <tr style="background-color:${i % 2 === 0 ? '#ffffff' : '#f0f8ff'};">
+      <td style="border:1px solid #ccc; padding:6px;">${d['担当者名']}</td>
+      <td style="border:1px solid #ccc; padding:6px; text-align:right;">${(d['売上予算']).toLocaleString()}</td>
+      <td style="border:1px solid #ccc; padding:6px; text-align:right;">${(d['売上金額']).toLocaleString()}</td>
+      <td style="border:1px solid #ccc; padding:6px; text-align:right;">${(d['加工高予算']).toLocaleString()}</td>
+      <td style="border:1px solid #ccc; padding:6px; text-align:right;">${(d['加工高']).toLocaleString()}</td>
+    </tr>
+  `).join('');
+
+  table.innerHTML = `<thead>${headerRow}</thead><tbody>${rows}</tbody>`;
+  container.appendChild(table);
 }
