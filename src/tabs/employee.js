@@ -5,18 +5,29 @@ export function buildEmployeeTab(container, ym) {
   wrapper.innerHTML = `<h3>${ym} 担当者別ダミー表示</h3>`;
   container.appendChild(wrapper);
 
+  // 横並びにするためのコンテナ
+  const chartContainer = document.createElement('div');
+  chartContainer.style.display = 'flex';
+  chartContainer.style.justifyContent = 'center';
+  chartContainer.style.gap = '32px';
+  chartContainer.style.flexWrap = 'wrap';
+  container.appendChild(chartContainer);
+
+  // キャンバス1（売上）
   const canvas1 = document.createElement('canvas');
   canvas1.width = 400;
   canvas1.height = 260;
-  container.appendChild(canvas1);
+  chartContainer.appendChild(canvas1);
 
+  // キャンバス2（加工高）
   const canvas2 = document.createElement('canvas');
   canvas2.width = 400;
   canvas2.height = 260;
-  container.appendChild(canvas2);
+  chartContainer.appendChild(canvas2);
 
   const labels = demoData.map(d => d['担当者名']);
 
+  // 売上グラフ
   new Chart(canvas1.getContext('2d'), {
     type: 'bar',
     data: {
@@ -29,10 +40,12 @@ export function buildEmployeeTab(container, ym) {
     options: {
       responsive: false,
       maintainAspectRatio: false,
+      plugins: { legend: { position: 'top' } },
       scales: { y: { beginAtZero: true } }
     }
   });
 
+  // 加工高グラフ
   new Chart(canvas2.getContext('2d'), {
     type: 'bar',
     data: {
@@ -45,6 +58,7 @@ export function buildEmployeeTab(container, ym) {
     options: {
       responsive: false,
       maintainAspectRatio: false,
+      plugins: { legend: { position: 'top' } },
       scales: { y: { beginAtZero: true } }
     }
   });
