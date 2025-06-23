@@ -1,7 +1,7 @@
 import { initTabs } from './tabs';
 
-console.log("📦 bundle.js updated: v1.3.16 - 2025/06/11");
-window.__BUNDLE_VERSION__ = "v1.3.16 - 2025/06/11";
+console.log("📦 bundle.js updated: v1.3.18 - 2025/06/23");
+window.__BUNDLE_VERSION__ = "v1.3.18 - 2025/06/23";
 
 (function () {
   'use strict';
@@ -71,10 +71,56 @@ window.__BUNDLE_VERSION__ = "v1.3.16 - 2025/06/11";
         root.id = 'tab-dashboard';
         kintone.app.getHeaderSpaceElement().appendChild(root);
         initTabs(root);
+
+        // ▼セレクターのデザインを反映
+        const menu = document.querySelector('.tab-menu');
+        if (menu) {
+          const selectorWrap = document.createElement('div');
+          selectorWrap.style.backgroundColor = '#e6f2ff';
+          selectorWrap.style.padding = '8px';
+          selectorWrap.style.borderRadius = '4px';
+          selectorWrap.style.marginTop = '8px';
+
+          selectorWrap.innerHTML = `
+            表示年月：
+            <select id="select-year">
+              ${[2025, 2024, 2023].map(y => `<option value="${y}">${y}年</option>`).join('')}
+            </select>
+            <select id="select-month">
+              ${[...Array(12)].map((_, i) => {
+                const m = i + 1;
+                return `<option value="${('0' + m).slice(-2)}">${m}月</option>`;
+              }).join('')}
+            </select>
+            <button id="dashboard-reload" style="margin-left:8px; padding:4px 8px;">再表示</button>
+          `;
+
+          menu.appendChild(selectorWrap);
+
+          // ▼初期値を当月に設定
+          const now = new Date();
+          menu.querySelector('#select-year').value = now.getFullYear();
+          menu.querySelector('#select-month').value = ('0' + (now.getMonth() + 1)).slice(-2);
+
+          // ▼再表示ボタン動作
+          menu.querySelector('#dashboard-reload').addEventListener('click', () => {
+            const year = menu.querySelector('#select-year').value;
+            const month = menu.querySelector('#select-month').value;
+            const ym = `${year}-${month}`;
+            
+            const key = menu.querySelector('button.active')?.dataset.tab;
+            if (key) {
+              const content = document.getElementById('tab-content');
+              content.innerHTML = '';
+              import('./tabs/employee.js').then(module => {
+                module.buildEmployeeTab(content, ym);
+              });
+            }
+          });
+        }
       });
     };
 
-    // イベント登録：1回目はボタンだけ追加、クリック時に非表示＋描画
     kintone.events.on('app.record.index.show', (event) => {
       if (Number(event.appId) !== APP_ID) return event;
       if (document.getElementById('custom-tab-buttons')) return event;
