@@ -1,7 +1,7 @@
 import { initTabs } from './tabs';
 
-console.log("📦 bundle.js updated: v1.3.19 - 2025/07/01");
-window.__BUNDLE_VERSION__ = "v1.3.19 - 2025/07/01";
+console.log("📦 bundle.js updated: v1.3.20 - 2025/07/01");
+window.__BUNDLE_VERSION__ = "v1.3.20 - 2025/07/01";
 
 (function () {
   'use strict';
@@ -37,6 +37,7 @@ window.__BUNDLE_VERSION__ = "v1.3.19 - 2025/07/01";
     const addTabUI = () => {
       const space = kintone.app.getHeaderSpaceElement();
 
+      // ボタン領域
       const wrap = document.createElement('div');
       wrap.id = 'custom-tab-buttons';
       wrap.innerHTML = `
@@ -62,7 +63,7 @@ window.__BUNDLE_VERSION__ = "v1.3.19 - 2025/07/01";
       `;
       space.appendChild(wrap);
 
-      // セレクターがまだ存在しない場合のみ追加
+      // セレクター（1回だけ設置）
       if (!document.getElementById('selector-wrap')) {
         const selectorWrap = document.createElement('div');
         selectorWrap.id = 'selector-wrap';
@@ -100,7 +101,6 @@ window.__BUNDLE_VERSION__ = "v1.3.19 - 2025/07/01";
         yearSelect.value = now.getFullYear();
         monthSelect.value = ('0' + (now.getMonth() + 1)).slice(-2);
 
-        // ▼再表示クリック
         selectorWrap.querySelector('#dashboard-reload').addEventListener('click', () => {
           const year = yearSelect.value;
           const month = monthSelect.value;
@@ -116,6 +116,7 @@ window.__BUNDLE_VERSION__ = "v1.3.19 - 2025/07/01";
         });
       }
 
+      // タブ表示ボタン
       document.getElementById('show-tabs-btn').addEventListener('click', () => {
         if (document.getElementById('tab-dashboard')) return;
         hideKintoneList();
