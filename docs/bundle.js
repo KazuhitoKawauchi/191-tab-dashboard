@@ -1,4 +1,4 @@
-(function(){"use strict";const u=[{担当者名:"佐藤",売上金額:95e4,売上予算:1e6,加工高:5e5,加工高予算:5e5,加工高率:"52.6%",加工高達成率:"100%"},{担当者名:"鈴木",売上金額:64e4,売上予算:8e5,加工高:34e4,加工高予算:4e5,加工高率:"53.1%",加工高達成率:"85%"},{担当者名:"田中",売上金額:115e4,売上予算:12e5,加工高:57e4,加工高予算:6e5,加工高率:"49.6%",加工高達成率:"95%"}];function h(d,c){const o=document.createElement("div");o.innerHTML=`<h3>${c} 担当者別ダミー表示</h3>`,d.appendChild(o);const s=document.createElement("div");s.style.display="flex",s.style.justifyContent="center",s.style.gap="32px",s.style.flexWrap="wrap",d.appendChild(s);const p=document.createElement("canvas");p.width=400,p.height=260,s.appendChild(p);const e=document.createElement("canvas");e.width=400,e.height=260,s.appendChild(e);const r=u.map(t=>t.担当者名);new Chart(p.getContext("2d"),{type:"bar",data:{labels:r,datasets:[{label:"売上予算",data:u.map(t=>t.売上予算/1e3),backgroundColor:"#66ccff"},{label:"売上金額",data:u.map(t=>t.売上金額/1e3),backgroundColor:"#3399ff"}]},options:{responsive:!1,maintainAspectRatio:!1,plugins:{legend:{position:"top"}},scales:{y:{beginAtZero:!0}}}}),new Chart(e.getContext("2d"),{type:"bar",data:{labels:r,datasets:[{label:"加工高予算",data:u.map(t=>t.加工高予算/1e3),backgroundColor:"#ffcc66"},{label:"加工高",data:u.map(t=>t.加工高/1e3),backgroundColor:"#ff9966"}]},options:{responsive:!1,maintainAspectRatio:!1,plugins:{legend:{position:"top"}},scales:{y:{beginAtZero:!0}}}});const l=document.createElement("table");l.style.borderCollapse="collapse",l.style.marginTop="32px",l.style.width="100%",l.style.fontSize="14px";const a=`
+(function(){"use strict";const g=[{担当者名:"佐藤",売上金額:95e4,売上予算:1e6,加工高:5e5,加工高予算:5e5,加工高率:"52.6%",加工高達成率:"100%"},{担当者名:"鈴木",売上金額:64e4,売上予算:8e5,加工高:34e4,加工高予算:4e5,加工高率:"53.1%",加工高達成率:"85%"},{担当者名:"田中",売上金額:115e4,売上予算:12e5,加工高:57e4,加工高予算:6e5,加工高率:"49.6%",加工高達成率:"95%"}];function x(c,r){const o=document.createElement("div");o.innerHTML=`<h3>${r} 担当者別ダミー表示</h3>`,c.appendChild(o);const s=document.createElement("div");s.style.display="flex",s.style.justifyContent="center",s.style.gap="32px",s.style.flexWrap="wrap",c.appendChild(s);const u=document.createElement("canvas");u.width=400,u.height=260,s.appendChild(u);const e=document.createElement("canvas");e.width=400,e.height=260,s.appendChild(e);const l=g.map(t=>t.担当者名);new Chart(u.getContext("2d"),{type:"bar",data:{labels:l,datasets:[{label:"売上予算",data:g.map(t=>t.売上予算/1e3),backgroundColor:"#66ccff"},{label:"売上金額",data:g.map(t=>t.売上金額/1e3),backgroundColor:"#3399ff"}]},options:{responsive:!1,maintainAspectRatio:!1,plugins:{legend:{position:"top"}},scales:{y:{beginAtZero:!0}}}}),new Chart(e.getContext("2d"),{type:"bar",data:{labels:l,datasets:[{label:"加工高予算",data:g.map(t=>t.加工高予算/1e3),backgroundColor:"#ffcc66"},{label:"加工高",data:g.map(t=>t.加工高/1e3),backgroundColor:"#ff9966"}]},options:{responsive:!1,maintainAspectRatio:!1,plugins:{legend:{position:"top"}},scales:{y:{beginAtZero:!0}}}});const n=document.createElement("table");n.style.borderCollapse="collapse",n.style.marginTop="32px",n.style.width="100%",n.style.fontSize="14px";const i=`
     <tr>
       <th style="border:1px solid #ccc; padding:6px; background-color:#007BFF; color:white;">担当者</th>
       <th style="border:1px solid #ccc; padding:6px; background-color:#66ccff;">売上予算</th>
@@ -6,25 +6,25 @@
       <th style="border:1px solid #ccc; padding:6px; background-color:#ffcc66;">加工高予算</th>
       <th style="border:1px solid #ccc; padding:6px; background-color:#ff9966; color:white;">加工高</th>
     </tr>
-  `,n=u.map((t,i)=>{const m=i%2===0?"#e6f7ff":"#ffffff",g=i%2===0?"#cce5ff":"#ffffff",f=i%2===0?"#fff5cc":"#ffffff",b=i%2===0?"#ffe0cc":"#ffffff";return`
+  `,a=g.map((t,d)=>{const p=d%2===0?"#e6f7ff":"#ffffff",h=d%2===0?"#cce5ff":"#ffffff",b=d%2===0?"#fff5cc":"#ffffff",m=d%2===0?"#ffe0cc":"#ffffff";return`
       <tr>
         <td style="border:1px solid #ccc; padding:6px;">${t.担当者名}</td>
-        <td style="border:1px solid #ccc; padding:6px; text-align:right; background-color:${m};">${t.売上予算.toLocaleString()}</td>
-        <td style="border:1px solid #ccc; padding:6px; text-align:right; background-color:${g};">${t.売上金額.toLocaleString()}</td>
-        <td style="border:1px solid #ccc; padding:6px; text-align:right; background-color:${f};">${t.加工高予算.toLocaleString()}</td>
-        <td style="border:1px solid #ccc; padding:6px; text-align:right; background-color:${b};">${t.加工高.toLocaleString()}</td>
+        <td style="border:1px solid #ccc; padding:6px; text-align:right; background-color:${p};">${t.売上予算.toLocaleString()}</td>
+        <td style="border:1px solid #ccc; padding:6px; text-align:right; background-color:${h};">${t.売上金額.toLocaleString()}</td>
+        <td style="border:1px solid #ccc; padding:6px; text-align:right; background-color:${b};">${t.加工高予算.toLocaleString()}</td>
+        <td style="border:1px solid #ccc; padding:6px; text-align:right; background-color:${m};">${t.加工高.toLocaleString()}</td>
       </tr>
-    `}).join("");l.innerHTML=`<thead>${a}</thead><tbody>${n}</tbody>`,d.appendChild(l)}const x=Object.freeze(Object.defineProperty({__proto__:null,buildEmployeeTab:h},Symbol.toStringTag,{value:"Module"}));function E(d,c){const o=document.createElement("p");o.innerText=`得意先別（${c}）：今後対応予定です。`,d.appendChild(o)}function v(d,c){const o=document.createElement("p");o.innerText=`品名別（${c}）：今後対応予定です。`,d.appendChild(o)}function C(d,c){const o=document.createElement("p");o.innerText=`年月別（${c}）：今後対応予定です。`,d.appendChild(o)}function k(d){const c=document.createElement("div");c.className="tab-menu",c.innerHTML=`
+    `}).join("");n.innerHTML=`<thead>${i}</thead><tbody>${a}</tbody>`,c.appendChild(n)}function C(c,r){const o=document.createElement("p");o.innerText=`得意先別（${r}）：今後対応予定です。`,c.appendChild(o)}function E(c,r){const o=document.createElement("p");o.innerText=`品名別（${r}）：今後対応予定です。`,c.appendChild(o)}function v(c,r){const o=document.createElement("p");o.innerText=`年月別（${r}）：今後対応予定です。`,c.appendChild(o)}function f(c){const r=document.createElement("div");r.className="tab-menu",r.innerHTML=`
     <button data-tab="employee" class="active">担当者別</button>
     <button data-tab="customer">得意先別</button>
     <button data-tab="product">品名別</button>
     <button data-tab="month">年月別</button>
-  `;const o=document.createElement("div");if(o.id="tab-content",d.appendChild(c),d.appendChild(o),!document.getElementById("dashboard-selector-wrap")){const e=document.createElement("div");e.id="dashboard-selector-wrap",e.style.backgroundColor="#e6f2ff",e.style.padding="8px",e.style.borderRadius="4px",e.style.marginTop="8px",e.innerHTML=`
+  `;const o=document.createElement("div");if(o.id="tab-content",c.appendChild(r),c.appendChild(o),!document.getElementById("dashboard-selector-wrap")){const e=document.createElement("div");e.id="dashboard-selector-wrap",e.style.backgroundColor="#e6f2ff",e.style.padding="8px",e.style.borderRadius="4px",e.style.marginTop="8px",e.innerHTML=`
       表示年月：
       <select id="select-year"></select>
       <select id="select-month"></select>
       <button id="dashboard-reload" style="margin-left:8px; padding:4px 8px;">再表示</button>
-    `,c.appendChild(e);const r=e.querySelector("#select-year"),l=e.querySelector("#select-month"),a=new Date;[a.getFullYear(),a.getFullYear()-1,a.getFullYear()-2].forEach(n=>{const t=document.createElement("option");t.value=n,t.textContent=`${n}年`,r.appendChild(t)});for(let n=1;n<=12;n++){const t=("0"+n).slice(-2),i=document.createElement("option");i.value=t,i.textContent=`${n}月`,l.appendChild(i)}r.value=a.getFullYear(),l.value=("0"+(a.getMonth()+1)).slice(-2),e.querySelector("#dashboard-reload").addEventListener("click",()=>{const n=c.querySelector("button.active").dataset.tab;n&&p(n)})}const s={employee:h,customer:E,product:v,month:C},p=e=>{o.innerHTML="";const r="custom-hide-kintone-list";if(!document.getElementById(r)){const t=document.createElement("style");t.id=r,t.innerHTML=`
+    `,r.appendChild(e);const l=e.querySelector("#select-year"),n=e.querySelector("#select-month"),i=new Date;[i.getFullYear(),i.getFullYear()-1,i.getFullYear()-2].forEach(a=>{const t=document.createElement("option");t.value=a,t.textContent=`${a}年`,l.appendChild(t)});for(let a=1;a<=12;a++){const t=("0"+a).slice(-2),d=document.createElement("option");d.value=t,d.textContent=`${a}月`,n.appendChild(d)}l.value=i.getFullYear(),n.value=("0"+(i.getMonth()+1)).slice(-2),e.querySelector("#dashboard-reload").addEventListener("click",()=>{const a=r.querySelector("button.active").dataset.tab;a&&u(a)})}const s={employee:x,customer:C,product:E,month:v},u=e=>{o.innerHTML="";const l="custom-hide-kintone-list";if(!document.getElementById(l)){const t=document.createElement("style");t.id=l,t.innerHTML=`
         .gaia-argoui-app-index-table,
         .gaia-argoui-app-index-list,
         .gaia-argoui-app-index-pane,
@@ -34,7 +34,7 @@
         .gaia-argoui-app-index-pager {
           display: none !important;
         }
-      `,document.head.appendChild(t)}c.querySelectorAll("button[data-tab]").forEach(t=>{t.classList.toggle("active",t.dataset.tab===e)});const l=document.getElementById("select-year").value,a=document.getElementById("select-month").value,n=`${l}-${a}`;s[e](o,n)};c.addEventListener("click",e=>{const r=e.target.dataset.tab;r&&s[r]&&p(r)})}console.log("📦 bundle.js updated: v1.3.18 - 2025/06/23"),window.__BUNDLE_VERSION__="v1.3.18 - 2025/06/23",function(){const d=document.createElement("script");d.src="https://cdn.jsdelivr.net/npm/chart.js",d.onload=()=>{const o=()=>{const e=kintone.app.getHeaderSpaceElement();for(;e.firstChild;)e.removeChild(e.firstChild)},s=()=>{if(document.getElementById("custom-hide-kintone-list"))return;const e=document.createElement("style");e.id="custom-hide-kintone-list",e.innerHTML=`
+      `,document.head.appendChild(t)}r.querySelectorAll("button[data-tab]").forEach(t=>{t.classList.toggle("active",t.dataset.tab===e)});const n=document.getElementById("select-year").value,i=document.getElementById("select-month").value,a=`${n}-${i}`;s[e](o,a)};r.addEventListener("click",e=>{const l=e.target.dataset.tab;l&&s[l]&&u(l)})}const w=Object.freeze(Object.defineProperty({__proto__:null,initTabs:f},Symbol.toStringTag,{value:"Module"}));console.log("📦 bundle.js updated: v1.3.19 - 2025/07/01"),window.__BUNDLE_VERSION__="v1.3.19 - 2025/07/01",function(){const c=document.createElement("script");c.src="https://cdn.jsdelivr.net/npm/chart.js",c.onload=()=>{const o=()=>{const e=kintone.app.getHeaderSpaceElement();for(;e.firstChild;)e.removeChild(e.firstChild)},s=()=>{if(document.getElementById("custom-hide-kintone-list"))return;const e=document.createElement("style");e.id="custom-hide-kintone-list",e.innerHTML=`
         .gaia-argoui-app-index-table,
         .gaia-argoui-app-index-list,
         .gaia-argoui-app-index-pane,
@@ -44,7 +44,7 @@
         .gaia-argoui-app-index-pager {
           display: none !important;
         }
-      `,document.head.appendChild(e)},p=()=>{const e=kintone.app.getHeaderSpaceElement(),r=document.createElement("div");r.id="custom-tab-buttons",r.innerHTML=`
+      `,document.head.appendChild(e)},u=()=>{const e=kintone.app.getHeaderSpaceElement(),l=document.createElement("div");if(l.id="custom-tab-buttons",l.innerHTML=`
         <style>
           .tab-trigger-wrap {
             display: flex;
@@ -64,13 +64,9 @@
         <div class="tab-trigger-wrap">
           <button id="show-tabs-btn">📊 グラフ・表を表示</button>
         </div>
-      `,e.appendChild(r),document.getElementById("show-tabs-btn").addEventListener("click",()=>{s(),o();const l=document.createElement("div");l.id="tab-dashboard",kintone.app.getHeaderSpaceElement().appendChild(l),k(l);const a=document.querySelector(".tab-menu");if(a){const n=document.createElement("div");n.style.backgroundColor="#e6f2ff",n.style.padding="8px",n.style.borderRadius="4px",n.style.marginTop="8px",n.innerHTML=`
-            表示年月：
-            <select id="select-year">
-              ${[2025,2024,2023].map(i=>`<option value="${i}">${i}年</option>`).join("")}
-            </select>
-            <select id="select-month">
-              ${[...Array(12)].map((i,m)=>{const g=m+1;return`<option value="${("0"+g).slice(-2)}">${g}月</option>`}).join("")}
-            </select>
-            <button id="dashboard-reload" style="margin-left:8px; padding:4px 8px;">再表示</button>
-          `,a.appendChild(n);const t=new Date;a.querySelector("#select-year").value=t.getFullYear(),a.querySelector("#select-month").value=("0"+(t.getMonth()+1)).slice(-2),a.querySelector("#dashboard-reload").addEventListener("click",()=>{var b;const i=a.querySelector("#select-year").value,m=a.querySelector("#select-month").value,g=`${i}-${m}`;if((b=a.querySelector("button.active"))==null?void 0:b.dataset.tab){const y=document.getElementById("tab-content");y.innerHTML="",Promise.resolve().then(()=>x).then(w=>{w.buildEmployeeTab(y,g)})}})}})};kintone.events.on("app.record.index.show",e=>(Number(e.appId)!==191||document.getElementById("custom-tab-buttons")||document.getElementById("tab-dashboard")||p(),e))},document.head.appendChild(d)}()})();
+      `,e.appendChild(l),!document.getElementById("selector-wrap")){const n=document.createElement("div");n.id="selector-wrap",n.style.backgroundColor="#e6f2ff",n.style.padding="8px",n.style.borderRadius="4px",n.style.marginTop="8px",n.innerHTML=`
+          表示年月：
+          <select id="select-year"></select>
+          <select id="select-month"></select>
+          <button id="dashboard-reload" style="margin-left:8px; padding:4px 8px;">再表示</button>
+        `,e.appendChild(n);const i=n.querySelector("#select-year"),a=n.querySelector("#select-month"),t=new Date;[t.getFullYear(),t.getFullYear()-1,t.getFullYear()-2].forEach(d=>{const p=document.createElement("option");p.value=d,p.textContent=`${d}年`,i.appendChild(p)});for(let d=1;d<=12;d++){const p=document.createElement("option");p.value=("0"+d).slice(-2),p.textContent=`${d}月`,a.appendChild(p)}i.value=t.getFullYear(),a.value=("0"+(t.getMonth()+1)).slice(-2),n.querySelector("#dashboard-reload").addEventListener("click",()=>{var m;const d=i.value,p=a.value,h=`${d}-${p}`,b=(m=document.querySelector(".tab-menu button.active"))==null?void 0:m.dataset.tab;if(b){const y=document.getElementById("tab-content");y.innerHTML="",Promise.resolve().then(()=>w).then(k=>{k.rebuildTab(y,b,h)})}})}document.getElementById("show-tabs-btn").addEventListener("click",()=>{if(document.getElementById("tab-dashboard"))return;s(),o();const n=document.createElement("div");n.id="tab-dashboard",e.appendChild(n),f(n)})};kintone.events.on("app.record.index.show",e=>(Number(e.appId)!==191||document.getElementById("custom-tab-buttons")||u(),e))},document.head.appendChild(c)}()})();
