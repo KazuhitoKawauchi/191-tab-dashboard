@@ -1,7 +1,7 @@
 import { initTabs } from './tabs';
 
-console.log("📦 bundle.js updated: v1.3.18 - 2025/06/23");
-window.__BUNDLE_VERSION__ = "v1.3.18 - 2025/06/23";
+console.log("📦 bundle.js updated: v1.3.19 - 2025/07/01");
+window.__BUNDLE_VERSION__ = "v1.3.19 - 2025/07/01";
 
 (function () {
   'use strict';
@@ -18,7 +18,6 @@ window.__BUNDLE_VERSION__ = "v1.3.18 - 2025/06/23";
 
     const hideKintoneList = () => {
       if (document.getElementById('custom-hide-kintone-list')) return;
-
       const style = document.createElement('style');
       style.id = 'custom-hide-kintone-list';
       style.innerHTML = `
@@ -63,68 +62,75 @@ window.__BUNDLE_VERSION__ = "v1.3.18 - 2025/06/23";
       `;
       space.appendChild(wrap);
 
+      // セレクターがまだ存在しない場合のみ追加
+      if (!document.getElementById('selector-wrap')) {
+        const selectorWrap = document.createElement('div');
+        selectorWrap.id = 'selector-wrap';
+        selectorWrap.style.backgroundColor = '#e6f2ff';
+        selectorWrap.style.padding = '8px';
+        selectorWrap.style.borderRadius = '4px';
+        selectorWrap.style.marginTop = '8px';
+
+        selectorWrap.innerHTML = `
+          表示年月：
+          <select id="select-year"></select>
+          <select id="select-month"></select>
+          <button id="dashboard-reload" style="margin-left:8px; padding:4px 8px;">再表示</button>
+        `;
+        space.appendChild(selectorWrap);
+
+        // ▼年・月セレクター構築
+        const yearSelect = selectorWrap.querySelector('#select-year');
+        const monthSelect = selectorWrap.querySelector('#select-month');
+        const now = new Date();
+
+        [now.getFullYear(), now.getFullYear() - 1, now.getFullYear() - 2].forEach((y) => {
+          const opt = document.createElement('option');
+          opt.value = y;
+          opt.textContent = `${y}年`;
+          yearSelect.appendChild(opt);
+        });
+        for (let i = 1; i <= 12; i++) {
+          const opt = document.createElement('option');
+          opt.value = ('0' + i).slice(-2);
+          opt.textContent = `${i}月`;
+          monthSelect.appendChild(opt);
+        }
+
+        yearSelect.value = now.getFullYear();
+        monthSelect.value = ('0' + (now.getMonth() + 1)).slice(-2);
+
+        // ▼再表示クリック
+        selectorWrap.querySelector('#dashboard-reload').addEventListener('click', () => {
+          const year = yearSelect.value;
+          const month = monthSelect.value;
+          const ym = `${year}-${month}`;
+          const key = document.querySelector('.tab-menu button.active')?.dataset.tab;
+          if (key) {
+            const content = document.getElementById('tab-content');
+            content.innerHTML = '';
+            import('./tabs/index.js').then(m => {
+              m.rebuildTab(content, key, ym);
+            });
+          }
+        });
+      }
+
       document.getElementById('show-tabs-btn').addEventListener('click', () => {
+        if (document.getElementById('tab-dashboard')) return;
         hideKintoneList();
         clearContent();
 
         const root = document.createElement('div');
         root.id = 'tab-dashboard';
-        kintone.app.getHeaderSpaceElement().appendChild(root);
+        space.appendChild(root);
         initTabs(root);
-
-        // ▼セレクターのデザインを反映
-        const menu = document.querySelector('.tab-menu');
-        if (menu) {
-          const selectorWrap = document.createElement('div');
-          selectorWrap.style.backgroundColor = '#e6f2ff';
-          selectorWrap.style.padding = '8px';
-          selectorWrap.style.borderRadius = '4px';
-          selectorWrap.style.marginTop = '8px';
-
-          selectorWrap.innerHTML = `
-            表示年月：
-            <select id="select-year">
-              ${[2025, 2024, 2023].map(y => `<option value="${y}">${y}年</option>`).join('')}
-            </select>
-            <select id="select-month">
-              ${[...Array(12)].map((_, i) => {
-                const m = i + 1;
-                return `<option value="${('0' + m).slice(-2)}">${m}月</option>`;
-              }).join('')}
-            </select>
-            <button id="dashboard-reload" style="margin-left:8px; padding:4px 8px;">再表示</button>
-          `;
-
-          menu.appendChild(selectorWrap);
-
-          // ▼初期値を当月に設定
-          const now = new Date();
-          menu.querySelector('#select-year').value = now.getFullYear();
-          menu.querySelector('#select-month').value = ('0' + (now.getMonth() + 1)).slice(-2);
-
-          // ▼再表示ボタン動作
-          menu.querySelector('#dashboard-reload').addEventListener('click', () => {
-            const year = menu.querySelector('#select-year').value;
-            const month = menu.querySelector('#select-month').value;
-            const ym = `${year}-${month}`;
-            
-            const key = menu.querySelector('button.active')?.dataset.tab;
-            if (key) {
-              const content = document.getElementById('tab-content');
-              content.innerHTML = '';
-              import('./tabs/employee.js').then(module => {
-                module.buildEmployeeTab(content, ym);
-              });
-            }
-          });
-        }
       });
     };
 
     kintone.events.on('app.record.index.show', (event) => {
       if (Number(event.appId) !== APP_ID) return event;
       if (document.getElementById('custom-tab-buttons')) return event;
-      if (document.getElementById('tab-dashboard')) return event;
 
       addTabUI();
       return event;
