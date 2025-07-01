@@ -1,5 +1,3 @@
-// === src/tabs/index.js ===
-
 import { buildEmployeeTab } from './employee.js';
 import { buildCustomerTab } from './customer.js';
 import { buildProductTab } from './product.js';
@@ -13,8 +11,13 @@ export function initTabs(container) {
     <button data-tab="customer">得意先別</button>
     <button data-tab="product">品名別</button>
     <button data-tab="month">年月別</button>
-    <select id="dashboard-select" style="margin-left:8px;"></select>
-    <button id="dashboard-reload" style="margin-left:4px;">再表示</button>
+
+    <div style="background-color:#e6f2ff; padding:8px; border-radius:4px; margin-top:8px;">
+      表示年月：
+      <select id="select-year"></select>
+      <select id="select-month"></select>
+      <button id="dashboard-reload" style="margin-left:8px; padding:4px 8px;">再表示</button>
+    </div>
   `;
 
   const content = document.createElement('div');
@@ -22,18 +25,32 @@ export function initTabs(container) {
   container.appendChild(menu);
   container.appendChild(content);
 
-  // ▼年月セレクター構築
-  const select = menu.querySelector('#dashboard-select');
+  // ▼年・月セレクター構築
+  const yearSelect = menu.querySelector('#select-year');
+  const monthSelect = menu.querySelector('#select-month');
   const current = new Date();
-  for (let i = 0; i < 12; i++) {
-    const d = new Date(current.getFullYear(), current.getMonth() - i, 1);
-    const y = d.getFullYear();
-    const m = ('0' + (d.getMonth() + 1)).slice(-2);
+
+  // 年セレクター（今年・昨年・一昨年）
+  const years = [current.getFullYear(), current.getFullYear() - 1, current.getFullYear() - 2];
+  years.forEach((y) => {
     const option = document.createElement('option');
-    option.value = `${y}-${m}`;
-    option.textContent = `${y}-${m}`;
-    select.appendChild(option);
+    option.value = y;
+    option.textContent = `${y}年`;
+    yearSelect.appendChild(option);
+  });
+
+  // 月セレクター（01～12）
+  for (let i = 1; i <= 12; i++) {
+    const m = ('0' + i).slice(-2);
+    const option = document.createElement('option');
+    option.value = m;
+    option.textContent = `${i}月`;
+    monthSelect.appendChild(option);
   }
+
+  // 初期値：当月
+  yearSelect.value = current.getFullYear();
+  monthSelect.value = ('0' + (current.getMonth() + 1)).slice(-2);
 
   const tabs = {
     employee: buildEmployeeTab,
@@ -68,11 +85,11 @@ export function initTabs(container) {
       b.classList.toggle('active', b.dataset.tab === key);
     });
 
-    const ym = select.value;
+    const ym = `${yearSelect.value}-${monthSelect.value}`;
     tabs[key](content, ym);
   };
 
-  // ▼クリック切替
+  // ▼タブ切替
   menu.addEventListener('click', (e) => {
     const key = e.target.dataset.tab;
     if (key && tabs[key]) switchTab(key);
@@ -81,9 +98,8 @@ export function initTabs(container) {
   // ▼再表示クリック
   menu.querySelector('#dashboard-reload').addEventListener('click', () => {
     const key = menu.querySelector('button.active').dataset.tab;
-    switchTab(key);
+    if (key) switchTab(key);
   });
 
-  // ▼初期表示：タブ未選択状態にし、Kintone一覧を表示
   // 初期表示時は何も描画しない
 }
