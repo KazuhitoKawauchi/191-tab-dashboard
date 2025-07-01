@@ -1,7 +1,7 @@
 import { initTabs } from './tabs';
 
-console.log("📦 bundle.js updated: v1.3.21 - 2025/07/01");
-window.__BUNDLE_VERSION__ = "v1.3.21 - 2025/07/01";
+console.log("📦 bundle.js updated: v1.3.22 - 2025/07/01");
+window.__BUNDLE_VERSION__ = "v1.3.22 - 2025/07/01";
 
 (function () {
   'use strict';
@@ -38,7 +38,7 @@ window.__BUNDLE_VERSION__ = "v1.3.21 - 2025/07/01";
       space.appendChild(root);
       initTabs(root);
 
-      // セレクターエリア（1回だけ設置）
+      // セレクターとチェックボックス（1回だけ設置）
       if (!document.getElementById('selector-wrap')) {
         const selectorWrap = document.createElement('div');
         selectorWrap.id = 'selector-wrap';
@@ -52,10 +52,16 @@ window.__BUNDLE_VERSION__ = "v1.3.21 - 2025/07/01";
           <select id="select-year"></select>
           <select id="select-month"></select>
           <button id="dashboard-reload" style="margin-left:8px; padding:4px 8px;">再表示</button>
+          <div style="margin-top:8px;">
+            <label><input type="checkbox" id="chk-quarter"> 四半期</label>
+            <label style="margin-left:12px;"><input type="checkbox" id="chk-upper"> 上半期</label>
+            <label style="margin-left:12px;"><input type="checkbox" id="chk-lower"> 下半期</label>
+            <label style="margin-left:12px;"><input type="checkbox" id="chk-full"> 全期</label>
+          </div>
         `;
         space.appendChild(selectorWrap);
 
-        // ▼セレクター初期化
+        // ▼年・月セレクター初期化
         const yearSelect = selectorWrap.querySelector('#select-year');
         const monthSelect = selectorWrap.querySelector('#select-month');
         const now = new Date();
@@ -76,6 +82,7 @@ window.__BUNDLE_VERSION__ = "v1.3.21 - 2025/07/01";
         yearSelect.value = now.getFullYear();
         monthSelect.value = ('0' + (now.getMonth() + 1)).slice(-2);
 
+        // ▼再表示ボタン動作
         selectorWrap.querySelector('#dashboard-reload').addEventListener('click', () => {
           const year = yearSelect.value;
           const month = monthSelect.value;
@@ -95,6 +102,7 @@ window.__BUNDLE_VERSION__ = "v1.3.21 - 2025/07/01";
     kintone.events.on('app.record.index.show', (event) => {
       if (Number(event.appId) !== APP_ID) return event;
       if (document.getElementById('tab-dashboard')) return event;
+
       hideKintoneList();
       setupUI();
       return event;
