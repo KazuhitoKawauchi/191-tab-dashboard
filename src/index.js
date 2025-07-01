@@ -1,7 +1,7 @@
 import { initTabs } from './tabs';
 
-console.log("📦 bundle.js updated: v1.3.20 - 2025/07/01");
-window.__BUNDLE_VERSION__ = "v1.3.20 - 2025/07/01";
+console.log("📦 bundle.js updated: v1.3.21 - 2025/07/01");
+window.__BUNDLE_VERSION__ = "v1.3.21 - 2025/07/01";
 
 (function () {
   'use strict';
@@ -10,11 +10,6 @@ window.__BUNDLE_VERSION__ = "v1.3.20 - 2025/07/01";
   chartJsScript.src = 'https://cdn.jsdelivr.net/npm/chart.js';
   chartJsScript.onload = () => {
     const APP_ID = 191;
-
-    const clearContent = () => {
-      const node = kintone.app.getHeaderSpaceElement();
-      while (node.firstChild) node.removeChild(node.firstChild);
-    };
 
     const hideKintoneList = () => {
       if (document.getElementById('custom-hide-kintone-list')) return;
@@ -34,36 +29,16 @@ window.__BUNDLE_VERSION__ = "v1.3.20 - 2025/07/01";
       document.head.appendChild(style);
     };
 
-    const addTabUI = () => {
+    const setupUI = () => {
       const space = kintone.app.getHeaderSpaceElement();
 
-      // ボタン領域
-      const wrap = document.createElement('div');
-      wrap.id = 'custom-tab-buttons';
-      wrap.innerHTML = `
-        <style>
-          .tab-trigger-wrap {
-            display: flex;
-            gap: 12px;
-            margin-top: 8px;
-          }
-          .tab-trigger-wrap button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-          }
-        </style>
-        <div class="tab-trigger-wrap">
-          <button id="show-tabs-btn">📊 グラフ・表を表示</button>
-        </div>
-      `;
-      space.appendChild(wrap);
+      // タブエリア
+      const root = document.createElement('div');
+      root.id = 'tab-dashboard';
+      space.appendChild(root);
+      initTabs(root);
 
-      // セレクター（1回だけ設置）
+      // セレクターエリア（1回だけ設置）
       if (!document.getElementById('selector-wrap')) {
         const selectorWrap = document.createElement('div');
         selectorWrap.id = 'selector-wrap';
@@ -80,7 +55,7 @@ window.__BUNDLE_VERSION__ = "v1.3.20 - 2025/07/01";
         `;
         space.appendChild(selectorWrap);
 
-        // ▼年・月セレクター構築
+        // ▼セレクター初期化
         const yearSelect = selectorWrap.querySelector('#select-year');
         const monthSelect = selectorWrap.querySelector('#select-month');
         const now = new Date();
@@ -115,25 +90,13 @@ window.__BUNDLE_VERSION__ = "v1.3.20 - 2025/07/01";
           }
         });
       }
-
-      // タブ表示ボタン
-      document.getElementById('show-tabs-btn').addEventListener('click', () => {
-        if (document.getElementById('tab-dashboard')) return;
-        hideKintoneList();
-        clearContent();
-
-        const root = document.createElement('div');
-        root.id = 'tab-dashboard';
-        space.appendChild(root);
-        initTabs(root);
-      });
     };
 
     kintone.events.on('app.record.index.show', (event) => {
       if (Number(event.appId) !== APP_ID) return event;
-      if (document.getElementById('custom-tab-buttons')) return event;
-
-      addTabUI();
+      if (document.getElementById('tab-dashboard')) return event;
+      hideKintoneList();
+      setupUI();
       return event;
     });
   };
