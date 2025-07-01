@@ -1,7 +1,7 @@
 import { initTabs } from './tabs';
 
-console.log("📦 bundle.js updated: v1.3.22 - 2025/07/01");
-window.__BUNDLE_VERSION__ = "v1.3.22 - 2025/07/01";
+console.log("📦 bundle.js updated: v1.3.23 - 2025/07/01");
+window.__BUNDLE_VERSION__ = "v1.3.23 - 2025/07/01";
 
 (function () {
   'use strict';
@@ -30,12 +30,20 @@ window.__BUNDLE_VERSION__ = "v1.3.22 - 2025/07/01";
     };
 
     const setupUI = () => {
-      const space = kintone.app.getHeaderSpaceElement();
+      const header = kintone.app.getHeaderMenuSpaceElement();
+
+      const container = document.createElement('div');
+      container.style.display = 'flex';
+      container.style.flexWrap = 'wrap';
+      container.style.gap = '16px';
+      container.style.alignItems = 'center';
+      container.style.marginTop = '8px';
+      header.appendChild(container);
 
       // タブエリア
       const root = document.createElement('div');
       root.id = 'tab-dashboard';
-      space.appendChild(root);
+      container.appendChild(root);
       initTabs(root);
 
       // セレクターとチェックボックス（1回だけ設置）
@@ -45,21 +53,21 @@ window.__BUNDLE_VERSION__ = "v1.3.22 - 2025/07/01";
         selectorWrap.style.backgroundColor = '#e6f2ff';
         selectorWrap.style.padding = '8px';
         selectorWrap.style.borderRadius = '4px';
-        selectorWrap.style.marginTop = '8px';
+        selectorWrap.style.display = 'flex';
+        selectorWrap.style.alignItems = 'center';
+        selectorWrap.style.gap = '8px';
 
         selectorWrap.innerHTML = `
           表示年月：
           <select id="select-year"></select>
           <select id="select-month"></select>
-          <button id="dashboard-reload" style="margin-left:8px; padding:4px 8px;">再表示</button>
-          <div style="margin-top:8px;">
-            <label><input type="checkbox" id="chk-quarter"> 四半期</label>
-            <label style="margin-left:12px;"><input type="checkbox" id="chk-upper"> 上半期</label>
-            <label style="margin-left:12px;"><input type="checkbox" id="chk-lower"> 下半期</label>
-            <label style="margin-left:12px;"><input type="checkbox" id="chk-full"> 全期</label>
-          </div>
+          <button id="dashboard-reload" style="padding:4px 8px;">再表示</button>
+          <label><input type="checkbox" id="chk-quarter"> 四半期</label>
+          <label><input type="checkbox" id="chk-upper"> 上半期</label>
+          <label><input type="checkbox" id="chk-lower"> 下半期</label>
+          <label><input type="checkbox" id="chk-full"> 全期</label>
         `;
-        space.appendChild(selectorWrap);
+        container.appendChild(selectorWrap);
 
         // ▼年・月セレクター初期化
         const yearSelect = selectorWrap.querySelector('#select-year');
@@ -82,7 +90,6 @@ window.__BUNDLE_VERSION__ = "v1.3.22 - 2025/07/01";
         yearSelect.value = now.getFullYear();
         monthSelect.value = ('0' + (now.getMonth() + 1)).slice(-2);
 
-        // ▼再表示ボタン動作
         selectorWrap.querySelector('#dashboard-reload').addEventListener('click', () => {
           const year = yearSelect.value;
           const month = monthSelect.value;
